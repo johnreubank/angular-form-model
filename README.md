@@ -5,7 +5,7 @@ decorator's arguments are identical to new FormControl(arguments)
 
 example:
 
-
+```
 import {FormField} from 'angular-form-model/lib/decorators';
 
 export class Book {
@@ -17,10 +17,11 @@ export class Book {
   author = 'John Eubank';
 
 }
-
+```
 
 to create an angular dynamic form using our model
 
+```
 import {Book} from './book.model';
 import {FormGroup} from '@angular/forms';
 import {FormModel} from 'angular-form-model';
@@ -44,4 +45,4 @@ class SomeComponent {
   }
 
 }
-
+```
