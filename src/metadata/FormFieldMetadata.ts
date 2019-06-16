@@ -1,5 +1,4 @@
-import {AbstractControlOptions} from '@angular/forms/src/model';
-import {AsyncValidatorFn, ValidatorFn} from '@angular/forms/src/directives/validators';
+import {AbstractControlOptions, AsyncValidatorFn, ValidatorFn} from "@angular/forms";
 
 export interface FormFieldOptions {
   formState?: any;
