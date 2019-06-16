@@ -12,7 +12,7 @@ export class FormModel {
 
   private form: FormGroup;
 
-  constructor(model: Object|Function, options: FormGroupOptions = {validatorOrOpts: null, asyncValidator: null}) {
+  constructor(model: Object, options: FormGroupOptions = {validatorOrOpts: null, asyncValidator: null}) {
 
     this.form = new FormGroup(this.getControls(model), options.validatorOrOpts, options.asyncValidator);
 

@@ -3,6 +3,7 @@
  */
 import {FormFieldMetadata} from './FormFieldMetadata';
 import 'reflect-metadata';
+import {FormControlMetadata} from "./FormControlMetadata";
 
 export class FormMetadataStorage {
 
@@ -11,6 +12,7 @@ export class FormMetadataStorage {
   // -------------------------------------------------------------------------
 
   private _formFieldMetadatas = new Map<Object, Map<string, FormFieldMetadata>>();
+  private _formControlMetadatas = new Map<Object, Map<string, FormControlMetadata>>();
 
   // -------------------------------------------------------------------------
   // Adder Methods
@@ -25,6 +27,16 @@ export class FormMetadataStorage {
 
   }
 
+  addFormControlMetadata(metadata: FormControlMetadata) {
+
+    if (!this._formControlMetadatas.has(metadata.target)) {
+      this._formControlMetadatas.set(metadata.target, new Map<string, FormControlMetadata>());
+    }
+
+    (this._formControlMetadatas.get(metadata.target) as Map<string, FormControlMetadata>).set(metadata.propertyName, metadata);
+
+  }
+
   // -------------------------------------------------------------------------
   // Public Methods
   // -------------------------------------------------------------------------
@@ -34,7 +46,6 @@ export class FormMetadataStorage {
   }
 
   getFormFieldMetadatas(target: Object): FormFieldMetadata[] {
-    console.log(this._formFieldMetadatas);
     return this.getMetadata(this._formFieldMetadatas, target);
   }
 
@@ -43,8 +54,28 @@ export class FormMetadataStorage {
       .map(metadata => metadata.propertyName);
   }
 
+  findFormControlMetadata(target: Object, propertyName: string): FormControlMetadata {
+    return this.findMetadata(this._formControlMetadatas, target, propertyName);
+  }
+
+  getFormControlMetadatas(target: Object): FormControlMetadata[] {
+    return this.getMetadata(this._formControlMetadatas, target);
+  }
+
+  hasFormControlMetadata(target: Object, propertyName: string): boolean {
+    if (!(this._formControlMetadatas.has(target))) {
+      return false;
+    }
+    if (!((this._formControlMetadatas.get(target) as Map<string, FormControlMetadata>).has(propertyName))) {
+      return false;
+    }
+    return true;
+  }
+
+
   clear() {
     this._formFieldMetadatas.clear();
+    this._formControlMetadatas.clear();
   }
 
   // -------------------------------------------------------------------------
@@ -55,10 +86,6 @@ export class FormMetadataStorage {
 
     if (!this._formFieldMetadatas.has(target)) {
       target = Object.getPrototypeOf(target);
-    }
-
-    if (!this._formFieldMetadatas.has(target)) {
-      console.log('fuck');
     }
 
     const metadataFromTargetMap = metadatas.get(target);
