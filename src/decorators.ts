@@ -32,15 +32,19 @@ export function FormControlOptions(
   };
 }
 
+export interface FormModelType {
+  toForm(): FormGroup;
+}
+
 export function FormModel<T extends {new(...args:any[]):{}}>(constructor:T) {
-    return class extends constructor {
-        public toForm(): FormGroup {
+    return class extends constructor implements FormModelType {
+        toForm(): FormGroup {
           // get any FormControls that exist on the object
-          const props = Object.getOwnPropertyNames(constructor);
+          const props = Object.getOwnPropertyNames(this);
           const controls: { [name: string]: FormControl } = {};
-          for (const prop in props) {
-            if (formMetadataStorage.hasFormControlMetadata(constructor, prop)) {
-              const metadata: FormControlMetadata = formMetadataStorage.findFormControlMetadata(constructor, prop);
+          for (const prop of props) {
+            if (formMetadataStorage.hasFormControlMetadata(this, prop)) {
+              const metadata: FormControlMetadata = formMetadataStorage.findFormControlMetadata(this, prop);
               controls[prop] = new FormControl(metadata.options.validatorOrOpts, metadata.options.asyncValidator);
               continue;
             }

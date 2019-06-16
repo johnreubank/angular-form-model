@@ -2,7 +2,6 @@
  * Storage all library metadata.
  */
 import {FormFieldMetadata} from './FormFieldMetadata';
-import 'reflect-metadata';
 import {FormControlMetadata} from "./FormControlMetadata";
 
 export class FormMetadataStorage {
