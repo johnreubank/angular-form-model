@@ -1,6 +1,6 @@
 {
   "name": "angular-form-model",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A decorator and class that allow you to create a form directly from a model in Angular",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
